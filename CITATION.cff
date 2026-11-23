@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Cite the preprint using the information below."
+title: "The First p-Adic Denominator Obstruction in a Zero-Initial Painleve II Family"
+authors:
+  - family-names: He
+    given-names: Zhijie
+version: 0.2.0
+date-released: "2026-11-23"
+url: "https://github.com/FDmd233/litt-problem-1"
+repository-code: "https://github.com/FDmd233/litt-problem-1"

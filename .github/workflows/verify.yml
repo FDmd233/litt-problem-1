@@ -1,0 +1,22 @@
+name: verify-preprint
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  mathematics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python verification/verify_pii_obstruction.py
+      - run: python verification/verify_prime_sieve.py
+      - run: python verification/verify_checksums.py
+  latex:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq latexmk texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended
+      - run: mkdir -p /tmp/litt1-build && latexmk -pdf -outdir=/tmp/litt1-build -interaction=nonstopmode -halt-on-error paper/main.tex

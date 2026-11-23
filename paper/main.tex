@@ -1,0 +1,578 @@
+\documentclass[11pt,a4paper,reqno]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\usepackage[margin=0.91in]{geometry}
+
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,pdftitle={The First p-Adic Denominator Obstruction in a Zero-Initial Painleve II Family},pdfauthor={Zhijie He},pdfcreationdate={D:20261123000000Z},pdfsubject={Arithmetic properties of the zero-initial Painleve II equation},pdfkeywords={Painleve II, p-adic denominators, Lam-Litt problem}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Zp}{\mathbb Z_p}
+\newcommand{\Zloc}{\mathbb Z_{(p)}}
+\newcommand{\ordp}{v_p}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\degA}{\deg_A}
+\newcommand{\cA}{\mathcal A}
+
+\title[First $p$-adic obstructions for a Painlev\'e II family]{The First $p$-Adic Denominator Obstruction in a Zero-Initial Painlev\'e II Family}
+\author{Zhijie He}
+\date{23 November 2026 --- version 0.2.0}
+
+\begin{document}
+\begin{abstract}
+For the zero-initial-value family
+\[
+ y''=2y^3+ty+A,\qquad y(0)=y'(0)=0,
+\]
+we determine the first possible denominator obstruction at every prime $p>3$ as an explicit polynomial in the parameter. If $r=\lfloor p/6\rfloor$ and $n_*=p+1$ for $p\equiv1\pmod 6$ and $n_*=p$ for $p\equiv5\pmod 6$, then the reduction of $p[t^{n_*}]y_A$ is
+\[
+ C_p A\prod_{j=1}^{r}(A^2-9j^2),
+\]
+with an explicit nonzero constant $C_p\in\F_p^*$. Consequently, for every $p$-integral parameter, the first coefficient that can fail to be $p$-integral is completely classified. In particular, for $A=1$, every prime other than $3$ occurs in a Taylor-coefficient denominator, and its first occurrence is exactly at degree $p$ or $p+1$ according to the residue class of $p$ modulo $6$, with valuation $-1$. For rational $A=a/b$, the first obstruction is eventually determined solely by the residue class of $p$ modulo $3b$ when $b\ge3$, and by $p$ modulo $6$ when $b=2$. We obtain the exact natural density of first-obstruction primes, alongside an arithmetic proof of the finite-denominator classification for this zero-initial family. The unrestricted Lam--Litt problem remains open.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Lam and Litt ask whether a formal solution of an algebraic ordinary differential equation, at an ordinary rational initial jet, must be algebraic whenever all Taylor coefficients have denominators supported on a fixed finite set of primes \cite{LamLitt}. Their formulation also relates this to a superlinear cutoff: one asks for a function $\omega(p)$ with $\omega(p)/p\to\infty$ such that the coefficients through degree $\omega(p)$ are $p$-integral for every prime $p$. This paper studies one explicit nonlinear family lying within that framework:
+\begin{equation}\label{eq:PII}
+ y_A''=2y_A^3+t y_A+A,\qquad y_A(0)=y_A'(0)=0.
+\end{equation}
+For each $A\in\Q$, the ordinary-point recursion determines a unique series $y_A\in\Q[[t]]$. If $A$ is treated as an indeterminate, its coefficients lie in $\Q[A]$.
+
+The main result is an exact formula for the first $p$-adic obstruction polynomial. It is stronger than merely showing that infinitely many primes occur in a denominator: it gives the first index and the exact valuation whenever the first possible obstruction is nonzero. The proof combines the coefficient recursion with a three-step B\"acklund transformation. The transformation supplies enough $p$-integral rational specializations to determine every root of the obstruction polynomial; a degree bound and its linear coefficient then determine the polynomial completely. The same formula also determines the prime congruence classes in which this first obstruction vanishes for every rational forcing parameter. In particular, first-obstruction primes have an explicitly computable natural density. The Lam--Litt equivalence between algebraicity, finite denominator support, and a superlinear $p$-integrality cutoff follows for the family \eqref{eq:PII}.
+
+The rational solutions of Painlev\'e II and the arithmetic of the Yablonskii--Vorob'ev polynomials have a substantial literature; see Murata's classification of rational solutions \cite{Murata}, the polynomial constructions of Fukutani--Okamoto--Umemura \cite{Fukutani}, and the standard summary in \cite{DLMF}. Kaneko and Ochiai give explicit coefficient formulas and study reduction modulo primes for the Yablonskii--Vorob'ev polynomials \cite{KanekoOchiai}; Roffelsen studies divisibility properties and Taylor expansions of the associated rational solutions \cite{Roffelsen}. In particular, the qualitative criterion that the zero-initial solution is rational exactly when $A\in3\mathbb Z$ can be recovered from the classical classification together with the $t^3$-support of the Yablonskii--Vorob'ev polynomials. We include a direct arithmetic proof because it also produces explicit progressions of primes and the exact first bad coefficient. The main assertion here is the parameter-uniform formula for the first denominator obstruction, not a new classification of rational Painlev\'e II solutions. Kaneko--Ochiai\'s Theorem~3 concerns the reduction of the Yablonskii--Vorob\'ev polynomials $T_{mp+n}(t)$ as the discrete index varies; the obstruction $H_p(A)$ here is instead a polynomial in the continuous forcing parameter of a formal initial-value family. We do not claim that the latter cannot be recovered from earlier formulas by additional arguments.
+Their normalization is $Y''=2Y^3-4xY+4n$.  The substitution
+$y(t)=-\mu Y(\mu t)$ with $\mu^3=-1/4$ gives
+$y''=2y^3+ty+n$.  This specifies the change of variables needed
+when comparing their polynomial congruences with our Taylor coefficients.
+
+
+\subsection*{Notation}
+For a prime $p$, $v_p$ is normalized by $v_p(p)=1$, and $\Z_{(p)}$ denotes the localization of $\Z$ at $(p)$. If $A$ is an indeterminate, a bar denotes reduction modulo $p$ after the indicated expression has been shown to be $p$-integral.
+
+\section{The first obstruction polynomial}
+
+Write
+\[
+ y_A(t)=\sum_{n\ge0}a_n(A)t^n\in\Q[A][[t]].
+\]
+The equation and initial conditions imply the support restriction
+\begin{equation}\label{eq:support}
+ y_A(t)=t^2\sum_{k\ge0}b_k(A)t^{3k}.
+\end{equation}
+The coefficients $b_k(A)$ satisfy
+\begin{equation}\label{eq:recurrence}
+ (3k+1)(3k+2)b_k
+ =A\,\mathbf 1_{k=0}+b_{k-1}
+ +2\sum_{\substack{i,j,\ell\ge0\\i+j+\ell=k-2}}b_i b_j b_\ell,
+ \qquad b_{-1}=0,
+\end{equation}
+where a sum with a negative target index is empty.
+
+\begin{lemma}\label{lem:degree}
+For every $k\ge0$, $b_k(A)$ is an odd polynomial and
+\[
+ \degA b_k\le 2\left\lfloor\frac{k}{2}\right\rfloor+1.
+\]
+Moreover,
+\[
+ [A]b_k(A)=\prod_{h=0}^{k}\bigl((3h+1)(3h+2)\bigr)^{-1}.
+\]
+\end{lemma}
+
+\begin{proof}
+The assertion follows by induction from \eqref{eq:recurrence}. Oddness is preserved by the linear term and by products of three odd polynomials. The degree estimate follows first from the rough bound $\degA b_k\le k+1$ and then from oddness. The cubic term has no contribution to the coefficient of $A$, so the linear coefficient is obtained by iterating the term $b_{k-1}$ in \eqref{eq:recurrence}.
+\end{proof}
+
+For $p>3$, put
+\[
+ r=\left\lfloor\frac p6\right\rfloor,\qquad
+ m=\left\lfloor\frac p3\right\rfloor,
+ \qquad n_*=3m+2.
+\]
+Thus $n_*=p+1$ if $p\equiv1\pmod6$, and $n_*=p$ if $p\equiv5\pmod6$. Define
+\begin{equation}\label{eq:Hpdef}
+ H_p(A)=\overline{p\,b_m(A)}\in\F_p[A].
+\end{equation}
+
+\begin{theorem}[Complete first-obstruction polynomial]\label{thm:Hp}
+For every prime $p>3$, the coefficients $b_k(A)$ belong to $\Z_{(p)}[A]$ for $k<m$, and $p b_m(A)\in\Z_{(p)}[A]$. Furthermore,
+\begin{equation}\label{eq:Hp}
+ \boxed{
+ H_p(A)=C_p A\prod_{j=1}^{r}(A^2-9j^2),
+ }
+\end{equation}
+where
+\[
+ C_p=
+ \begin{cases}
+ (-1)^{r+1}\displaystyle\binom{2r}{r},&p=6r+1,\\[2mm]
+ 2(-1)^r\displaystyle\binom{2r}{r},&p=6r+5.
+ \end{cases}
+\]
+In particular, $C_p\ne0$ in $\F_p$.
+\end{theorem}
+
+\begin{proof}
+For $k<m$, neither factor in $(3k+1)(3k+2)$ is divisible by $p$, so the integrality assertion follows from \eqref{eq:recurrence}. At $k=m$, the denominator contains exactly one factor of $p$: it is $p(p+1)$ when $p=6r+1$ and $p(p-1)$ when $p=6r+5$. Thus $p b_m$ is $p$-integral. By Lemma~\ref{lem:degree},
+\[
+ \deg H_p\le 2r+1.
+\]
+The coefficient of $A$ in the numerator of the recurrence at
+$k=m$ is
+\[
+\frac{3^m m!}{(3m)!}.
+\]
+Since $3m<p$, this is a $p$-adic unit. The denominator at $k=m$
+contains precisely one factor of $p$, so the coefficient of $A$ in
+$H_p$ is nonzero. In particular, $H_p\ne0$ before any root counting.
+
+We next identify the $2r+1$ roots $0,\pm3,\ldots,\pm3r$ in $\F_p$. The root $0$ follows from $y_0=0$. The remaining roots come from the following integrality property of the B\"acklund transformation.
+
+\begin{lemma}\label{lem:BT}
+Let $R$ be a characteristic-zero integral domain, let $\alpha\in R$, and assume that $2$, $2\alpha+1$, and $2\alpha+5$ are units in $R$. If $y_\alpha\in R[[t]]$ is the zero-initial solution of \eqref{eq:PII}, then
+\[
+ T_{\alpha+2}T_{\alpha+1}T_\alpha(y_\alpha)=y_{\alpha+3}\in R[[t]],
+\]
+where
+\[
+ T_\beta(u)=-u-\frac{2\beta+1}{2u^2+2u'+t}.
+\]
+The intermediate transforms are interpreted in $\operatorname{Frac}(R)((t))$; their possible poles at $t=0$ cancel after the third transform.
+\end{lemma}
+
+\begin{proof}
+A direct differentiation verifies that $T_\beta$ sends a solution of parameter $\beta$ to a solution of parameter $\beta+1$. For completeness, set $W=2u^2+2u'+t$ and $q=(2\beta+1)/W$. The equation gives
+\[
+ W'=2uW+2\beta+1,\qquad q'=-2uq-q^2.
+\]
+Substituting $v=-u-q$ yields $v''-2v^3-tv=\beta+1$.
+
+We use the elementary fact that a Laurent series whose leading coefficient is a unit of $R$ has an inverse in $R((t))$. Each denominator below is a power of $t$ times a unit in $R[[t^3]]$, so inversion preserves the indicated support class. We track the three Laurent steps. First,
+\[
+ y_\alpha=\frac\alpha2t^2+O(t^5),\qquad
+ 2y_\alpha^2+2y_\alpha'+t=(2\alpha+1)t+O(t^4),
+\]
+so the first transform is in $R((t))$ and begins $-t^{-1}+O(t^2)$. For a Laurent solution $u=-t^{-1}+O(t^2)$ at parameter $\alpha+1$, the next denominator begins $4t^{-2}$; hence the second transform is in $R((t))$ and begins $t^{-1}+O(t^2)$. No invertibility of $2\alpha+3$ is needed in this step.
+
+More precisely, if $u=\varepsilon t^{-1}+c t^2+O(t^5)$, with $\varepsilon=\pm1$, satisfies the equation at parameter $\beta$, comparison of constant terms gives
+\[
+ c=-\frac{\beta+\varepsilon}{4}.
+\]
+For the second transform, $\varepsilon=1$ and $\beta=\alpha+2$, so $c=-(\alpha+3)/4$. Its third denominator is therefore
+\[
+ 2u^2+2u'+t=-(2\alpha+5)t+O(t^4).
+\]
+This has a unit leading coefficient. The third transform is in $R((t))$; its leading $-t^{-1}$ term cancels the pole of $-u$. The support remains in $t^{-1}R((t^3))$, so a regular result has no constant or linear term. It is therefore the unique zero-initial solution at parameter $\alpha+3$, as claimed.
+\end{proof}
+
+Starting with $y_0=0$ and iterating Lemma~\ref{lem:BT}, we obtain, for every $j\ge1$,
+\[
+ y_{3j}\in\Q(t)\cap\Z[1/M_j][[t]],\qquad
+ M_j=2\prod_{h=0}^{j-1}(6h+1)(6h+5).
+\]
+The identity $y_{-\alpha}=-y_\alpha$ follows by substituting $-y_\alpha$ into \eqref{eq:PII} and using uniqueness; it gives the same statement for negative multiples of $3$. Thus, if $1\le j\le r$ and $p>3$, then $p>6j-1$ and $y_{\pm3j}\in\Z_p[[t]]$. By uniqueness of the formal solution, specializing $A=\pm3j$ in the coefficient recursion gives these same series. Consequently
+\[
+ H_p(0)=H_p(3j)=H_p(-3j)=0\qquad(1\le j\le r).
+\]
+The residues are distinct because their integer representatives lie in $[-3r,3r]$ and $6r<p$. Since $H_p$ has degree at most $2r+1$ and has $2r+1$ distinct roots, it is therefore a nonzero scalar multiple of
+\[
+ P_r(A)=A\prod_{j=1}^{r}(A^2-9j^2).
+\]
+
+It remains to determine the scalar. Let $N_m(A)$ be the right-hand side of \eqref{eq:recurrence} at $k=m$. By Lemma~\ref{lem:degree},
+\[
+ [A]N_m(A)=\prod_{h=0}^{m-1}((3h+1)(3h+2))^{-1}
+ =\frac{3^m m!}{(3m)!}.
+\]
+Therefore
+\[
+ [A]H_p(A)=\overline{\frac{p}{(3m+1)(3m+2)}\frac{3^m m!}{(3m)!}}.
+\]
+Using Wilson's theorem, this becomes
+\[
+ [A]H_p(A)=
+ \begin{cases}
+ -3^{2r}(2r)!,&p=6r+1,\\
+ -3^{2r+1}(2r+1)!,&p=6r+5.
+ \end{cases}
+\]
+On the other hand,
+\[
+ [A]P_r(A)=(-1)^r3^{2r}(r!)^2.
+\]
+Taking the ratio gives the stated values of $C_p$. All factorials that are inverted have index less than $p$, so the constants are nonzero in $\F_p$.
+\end{proof}
+
+\begin{corollary}[First denominator test at an arbitrary p-integral parameter]\label{cor:first-test}
+Let $p>3$ and $\alpha\in\Z_p$. All coefficients of $y_\alpha$ of degree less than $n_*$ are $p$-integral, and $p[t^{n_*}]y_\alpha$ is $p$-integral. Moreover,
+\[
+ v_p([t^{n_*}]y_\alpha)=-1
+ \quad\Longleftrightarrow\quad
+ \bar\alpha\notin\{0,\pm3,\ldots,\pm3r\}.
+\]
+If $\bar\alpha$ belongs to the displayed set, then the coefficient at degree $n_*$ is integral; no assertion is made about later coefficients.
+\end{corollary}
+
+\begin{proof}
+The first assertions follow from the recurrence. The coefficient at degree $n_*$ is $b_m(\alpha)$. Its product with $p$ reduces to $H_p(\bar\alpha)$. The latter is a unit exactly when it is nonzero, which is equivalent to the stated condition by \eqref{eq:Hp}.
+\end{proof}
+
+\section{\texorpdfstring{The parameter $A=1$}{The parameter A=1}}
+
+\begin{theorem}\label{thm:A1}
+Let $y_1(t)=\sum_{n\ge0}a_n t^n$ be the zero-initial solution of
+\[
+ y_1''=2y_1^3+t y_1+1.
+\]
+For each prime $p$, define
+\[
+ n_p=\min\{n\ge0:v_p(a_n)<0\},
+\]
+with $n_p=\infty$ if no such coefficient exists. Then
+\[
+ n_2=2,\qquad n_3=\infty,
+\]
+and for every $p>3$,
+\[
+ n_p=
+ \begin{cases}
+ p+1,&p\equiv1\pmod6,\\
+ p,&p\equiv5\pmod6.
+ \end{cases}
+ \qquad v_p(a_{n_p})=-1.
+\]
+In particular, the set of primes occurring in the denominators of the Taylor coefficients of $y_1$ is exactly the set of primes other than $3$.
+\end{theorem}
+
+\begin{proof}
+For $p>3$, the residue class $1\in\F_p$ is not among $0,\pm3,\ldots,\pm3r$, because $3r<p/2$. Apply Corollary~\ref{cor:first-test}. Evaluating \eqref{eq:Hp} at $A=1$ gives the more precise residue
+\[
+ p a_{n_p}\equiv
+ \begin{cases}
+ -\displaystyle\binom{2r}{r}\frac{(3r+1)!}{3^r r!},&p=6r+1,\\[2mm]
+ 2\displaystyle\binom{2r}{r}\frac{(3r+1)!}{3^r r!},&p=6r+5,
+ \end{cases}
+ \pmod p.
+\]
+Here we used
+\[
+ \prod_{j=1}^{r}(1-9j^2)=(-1)^r\frac{(3r+1)!}{3^r r!}.
+\]
+In particular, this residue is nonzero. For $p=2$, $a_2=1/2$. For $p=3$, every denominator $(3k+1)(3k+2)$ in \eqref{eq:recurrence} is a $3$-adic unit, so all coefficients are $3$-integral.
+\end{proof}
+
+\section{All rational parameters}
+
+\begin{theorem}\label{thm:rational-parameter}
+For $\alpha\in\Q$, the zero-initial solution $y_\alpha$ has finite denominator support if and only if $\alpha\in3\Z$:
+\[
+ y_\alpha\in\Z[1/N][[t]]\text{ for some }N\ge1
+ \quad\Longleftrightarrow\quad \alpha\in3\Z.
+\]
+If $\alpha\notin3\Z$, there exist integers $L\ge1$ and $u$ with $\gcd(u,L)=1$ such that every prime
+\[
+ p>\max(3,2|a|),\qquad p\equiv u\pmod L,
+\]
+where $\alpha=a/b$ is in lowest terms with $b>0$, has its first nonintegral coefficient at degree $p$ or $p+1$ as in Theorem~\ref{thm:A1}, and that coefficient has valuation $-1$.
+\end{theorem}
+
+\begin{proof}
+If $\alpha=3j$, the three-step B\"acklund construction above gives a rational function with Taylor coefficients in $\Z[1/M_{|j|}]$ (with the zero solution when $j=0$). This proves one direction.
+
+For the converse, write $\alpha=a/b$ in lowest terms, $b>0$, and assume $\alpha\notin3\Z$. By Corollary~\ref{cor:first-test}, it suffices to find a reduced residue class $u\pmod L$ such that every sufficiently large prime in this class avoids the root set $\{0,\pm3,\ldots,\pm3r\}$.
+
+We use the following elementary avoidance construction. If $b=1$ and $3\nmid a$, take $L=1,u=0$. For $p>2|a|$, the integer $a$ is the unique representative of its residue in $(-p/2,p/2)$, whereas every root representative is a multiple of $3$; hence $a$ is not a root.
+
+If $b=2$ and $3\nmid a$, take $L=6$ and $u\equiv-|a|\pmod6$. Then $u$ is a unit modulo $6$. If $a\equiv3bj\pmod p$ for some $|j|\le r$, write $3bj=a+\ell p$. Reducing modulo $6$ gives $\ell\equiv\sgn(a)\pmod6$. If $\ell=\sgn(a)$, then $|a+\ell p|=|a|+p>p$; otherwise $|\ell|\ge5$ and $|a+\ell p|\ge5p-|a|>p$. Both contradict $|3bj|\le6r<p$.
+
+In the remaining cases, $b\ge3$ or $b=2$ and $3\mid a$. Put $g=\gcd(a,3)\in\{1,3\}$. Choose $k=b+\delta$, $\delta\in\{-1,1\}$, according to
+\[
+\begin{array}{c|c|c}
+ b\bmod3&g&\delta\\\hline
+ 0&1&1\\
+ 1&1&1\\
+ 1&3&-1\\
+ 2&1&-1\\
+ 2&3&1
+\end{array}
+\]
+Then $\gcd(k,b)=1$, $\gcd(k,3b)=g$, and
+\[
+ b/2<k\le3b/2,\qquad k-b/2\ge1/2.
+\]
+Set $L=3b$. If $g=1$, choose the unit $u\pmod{3b}$ satisfying $ku\equiv-a\pmod{3b}$. If $g=3$, first solve
+\[
+ (k/3)u_0\equiv-a/3\pmod b,
+\]
+then choose one of $u_0,u_0+b,u_0+2b$ that is not divisible by $3$. Such a choice is a unit modulo $3b$ and satisfies the same congruence. Thus in either case $\gcd(u,L)=1$ and
+\[
+ ku\equiv-a\pmod{3b}.
+\]
+
+Let $p>\max(3,2|a|)$ satisfy $p\equiv u\pmod{3b}$. If $a/b\equiv3j\pmod p$ for some $|j|\le r$, then
+\[
+ 3bj=a+\ell p,
+ \qquad |a+\ell p|\le3br<bp/2.
+\]
+Reducing modulo $3b$ and using $ku\equiv-a$ gives $\ell\equiv k\pmod{3b}$, since $p$ is a unit modulo $3b$. Hence $|\ell|\ge k$, and therefore
+\[
+ |a+\ell p|\ge kp-|a|>bp/2,
+\]
+a contradiction. The chosen residue class therefore avoids the root set. Dirichlet's theorem on primes in arithmetic progressions supplies infinitely many such primes \cite{SutherlandDirichlet}. For each of them, Corollary~\ref{cor:first-test} gives a coefficient with valuation $-1$, so no fixed finite set of primes contains all denominators.
+\end{proof}
+
+\begin{corollary}[Uniform bad primes for nonexceptional integer parameters]\label{cor:integer-primes}
+If $a\in\mathbb Z$ and $3\nmid a$, then for every prime
+$p>\max\{3,2|a|\}$ the first non-$p$-integral coefficient of $y_a$
+occurs in degree $p+1$ when $p\equiv1\pmod6$, or degree $p$ when
+$p\equiv5\pmod6$, and its $p$-adic valuation is $-1$.
+At each prime $p>3$, precisely $2\lfloor p/6\rfloor+1$ parameter
+residues in $\mathbb F_p$ have an integral coefficient at this first
+possible obstruction degree.
+\end{corollary}
+
+\begin{proof}
+The integer $a$ is the unique representative of its residue in
+$(-p/2,p/2)$. The roots of $H_p$ have representatives
+$0,\pm3,\ldots,\pm3\lfloor p/6\rfloor$ in the same interval;
+none equals $a$ because $3\nmid a$. The first claim follows from
+Corollary~\ref{cor:first-test}. The product in Theorem~\ref{thm:Hp}
+has $2\lfloor p/6\rfloor+1$ distinct roots, giving the second claim.
+\end{proof}
+
+
+\subsection{Congruence classes of obstructed primes}
+
+For a rational parameter $a/b$ in lowest terms, a prime $p\nmid b$
+is called \emph{first-obstructed} if the coefficient at the first
+possible obstruction index $n_*(p)$ has valuation $-1$.  Otherwise
+that coefficient is $p$-integral; the word ``otherwise'' makes no
+assertion about subsequent coefficients.  Theorem~\ref{thm:Hp}
+turns this question into a finite congruence computation.
+
+\begin{theorem}[Eventual congruence classification]\label{thm:residue-sieve}
+Let $a/b\in\Q$ be reduced with $b\ge3$, and put $M=3b$.
+Define the set of unit residue classes
+\[
+ \mathcal R_{a,b}=\left\{u\in(\Z/M\Z)^\times:
+   \begin{array}{l}
+   \text{there is an integer }\ell\text{ with }0<2|\ell|<b\\[-1mm]
+   \text{and }\ell u\equiv-a\pmod M
+   \end{array}\right\}.
+\]
+For every prime $p>2|a|+5b$, the coefficient
+$[t^{n_*(p)}]y_{a/b}$ is $p$-integral if and only if
+\[
+                 p\bmod M\in\mathcal R_{a,b}.
+\]
+Thus the first-obstructed primes have natural density
+\begin{equation}\label{eq:delta}
+ \delta_{a,b}=1-\frac{|\mathcal R_{a,b}|}{\varphi(3b)}>0.
+\end{equation}
+The residue-set cardinality has the explicit form
+\begin{equation}\label{eq:residue-count}
+ |\mathcal R_{a,b}|=
+ \begin{cases}
+ 2\#\{1\le j<b/2:\gcd(j,3b)=1\},&3\nmid a,\\[1mm]
+ 4\#\{1\le j<b/6:\gcd(j,b)=1\},&3\mid a.
+ \end{cases}
+\end{equation}
+In the second case $3\nmid b$ necessarily. In particular, the
+density depends on $b$ and on whether $3$ divides $a$, but not
+on the other residue classes of $a$.
+\end{theorem}
+
+\begin{proof}
+Write $p=6r+c$ with $c\in\{1,5\}$ and $r=\lfloor p/6\rfloor$.
+By Corollary~\ref{cor:first-test}, the first possible obstruction
+vanishes precisely when there is an integer $j$, $|j|\le r$,
+with $a\equiv3bj\pmod p$.  Equivalently, for some integer $\ell$,
+\begin{equation}\label{eq:lift-ineq}
+ 3bj=a+\ell p,\qquad
+ \ell p\equiv-a\pmod{3b},\qquad
+ |a+\ell p|\le\frac b2(p-c).
+\end{equation}
+If $|\ell|<b/2$, then $|\ell|\le b/2-1/2$; consequently
+\[
+ |a+\ell p|\le(b/2-1/2)p+|a|
+       <\frac b2(p-5)\le\frac b2(p-c),
+\]
+where the strict inequality follows from $p>2|a|+5b$.
+Conversely, if $|\ell|>b/2$, then
+$|a+\ell p|\ge(b/2+1/2)p-|a|>bp/2$,
+so \eqref{eq:lift-ineq} is impossible.  At the boundary
+$|\ell|=b/2$, the integer $b$ is even.  Since $b\ge4$,
+the congruence $\ell p\equiv-a\pmod{3b}$ would force
+$b/2$ to divide $a$, contrary to $\gcd(a,b)=1$.
+Therefore \eqref{eq:lift-ineq} is equivalent to the
+existence of $\ell$ with $|\ell|<b/2$ satisfying
+$\ell p\equiv-a\pmod M$.  The choice $\ell=0$ is impossible,
+because $b\nmid a$.  This proves the stated residue-class criterion.
+
+To count the classes, first suppose $3\nmid a$.  Any successful
+$\ell$ must be a unit modulo $M$.  For each such $\ell$ there
+is exactly one unit $u\equiv-a\ell^{-1}\pmod M$.
+Different $\ell$ in the stated interval give different classes:
+if they gave the same $u$, then $M$ would divide their difference,
+whose absolute value is less than $b$.  Counting positive and
+negative $\ell$ yields the first line of \eqref{eq:residue-count}.
+
+If $3\mid a$, then $3\nmid b$ and every successful $\ell$ is
+of the form $3j$.  Dividing the congruence by $3$ gives
+$j u\equiv-a/3\pmod b$, with $0<|j|<b/6$.
+Since $\gcd(a/3,b)=1$, the integer $j$ must be a unit modulo $b$.
+Each such $j$ determines one unit class modulo $b$, which has exactly
+two unit lifts modulo $3b$ by the Chinese remainder theorem.
+Distinct $j$ again give distinct classes.  This gives the
+second line of \eqref{eq:residue-count}.
+
+The prime number theorem in arithmetic progressions gives
+\eqref{eq:delta}.  Positivity follows from the avoidance class
+constructed in the proof of Theorem~\ref{thm:rational-parameter}:
+that class contains arbitrarily large first-obstructed primes and
+therefore is disjoint from $\mathcal R_{a,b}$.
+\end{proof}
+
+The small denominators admit a simpler description.
+\begin{corollary}\label{cor:small-b}
+Let $a/b$ be reduced.  For all primes $p>\max\{3,2|a|\}$:
+\begin{enumerate}[label=(\roman*)]
+\item if $b=1$, the first obstruction vanishes exactly when $3\mid a$;
+\item if $b=2$, it vanishes exactly when $p\equiv|a|\pmod6$.
+\end{enumerate}
+For $b=2$, the first-obstructed primes consequently have density
+$1$ if $3\mid a$, and density $1/2$ otherwise.  For $b=1$ their
+density is $0$ or $1$ according as $3\mid a$ or $3\nmid a$.
+\end{corollary}
+
+\begin{proof}
+For $b=1$, the roots $0,\pm3,\ldots,\pm3r$ are the multiples
+of $3$ in the centered interval $[-3r,3r]$.  When $p>2|a|$,
+$a$ lies in this interval if $3\mid a$, proving (i).
+For $b=2$, use \eqref{eq:lift-ineq} with the right-hand bound
+$p-c$.  As $p>2|a|$, only $\ell=\pm1$ could occur (the value
+$\ell=0$ would require $6\mid a$, impossible for odd $a$).
+The size inequality forces $\ell=-\operatorname{sgn}(a)$;
+the remaining congruence is $p\equiv|a|\pmod6$.
+Conversely, if this congruence holds, then $|a|\ge c$ and
+$|a+\ell p|=p-|a|\le p-c$, giving a root.  Dirichlet's
+theorem on primes modulo $6$ gives the densities.
+\end{proof}
+
+For example, the first-obstructed primes for $A=1/2$ are
+precisely $p\equiv5\pmod6$ for every $p>3$; for $A=3/2$,
+every prime $p>3$ is first-obstructed.  For $A=1/3$ and $A=1/4$
+their densities are respectively $2/3$ and $1/2$, while for
+$A=3/7$ the density is $2/3$.  These are densities of first-obstructed
+primes, not assertions about all subsequent denominator occurrences.
+
+\begin{remark}
+The qualitative equivalence in Theorem~\ref{thm:rational-parameter} is consistent with, and can also be recovered from, the classical algebraic-solution classification. Murata's result states that an algebraic solution of $P_{II}(A)$ exists only for integral $A$, and in that case the algebraic solution is unique and rational; this formulation is recalled in Freitag--Nagloo \cite[Section~3]{FreitagNagloo}. The Yablonskii--Vorob'ev polynomials have the support pattern $Q_n(t)=t^{\delta_n}P_n(t^3)$, where $\delta_n=1$ for $n\equiv1\pmod3$ and $\delta_n=0$ otherwise, with $P_n(0)\ne0$; see \cite{KanekoOchiai}. The rational solution is $r_n=(\log(Q_{n-1}/Q_n))'$. If $n\equiv0\pmod3$, both $Q_n$ and $Q_{n-1}$ are units in $\mathbb C[[t^3]]$, so $r_n=O(t^2)$. If $n\equiv1$ or $2\pmod3$, exactly one of $Q_n,Q_{n-1}$ has a simple factor $t$, and $r_n$ has a pole at $0$. Hence the unique rational solution has a regular zero 1-jet at $t=0$ exactly when $A\in3\mathbb Z$. We include the direct arithmetic proof above because it supplies explicit progressions of primes and the exact first bad coefficient.
+
+The finite-denominator classification is restricted to the zero-initial-value family centered at $t=0$. It is not a classification for arbitrary initial jets of Painlev\'e II, and it does not imply the unrestricted Lam--Litt conjecture. By the Eisenstein theorem for algebraic power series, the infinite denominator support for $A\notin3\Z$ also implies that $y_A$ is transcendental over $\Q(t)$; see \cite{BiluBorichev}.
+\end{remark}
+
+\begin{corollary}[The Lam--Litt criterion for the zero-initial family]\label{cor:LL}
+For every $A\in\Q$, the following conditions are equivalent for the solution of \eqref{eq:PII}, and hold exactly when $A\in3\Z$:
+\begin{enumerate}[label=(\roman*)]
+\item $y_A$ is algebraic over $\Q(t)$;
+\item $y_A\in\Z[1/N][[t]]$ for some $N\ge1$;
+\item there is a function $\omega$ from the primes to the nonnegative integers such that $\omega(p)/p\to\infty$ and
+\[
+ [t^n]y_A\in\Z_{(p)}\qquad(0\le n\le\omega(p))
+\]
+for every prime $p$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+If $A\in3\Z$, Theorem~\ref{thm:rational-parameter} gives $y_A\in\Z[1/N][[t]]$, so (i) and (ii) hold. Condition (iii) follows by taking $\omega(p)=p^2$ for primes $p\nmid N$ and $\omega(p)=0$ for primes $p\mid N$. The latter choice is valid because the constant coefficient is zero, and changing finitely many values does not affect the limit.
+
+If $A\notin3\Z$, Theorem~\ref{thm:rational-parameter} gives an arithmetic progression containing infinitely many primes for which the first nonintegral coefficient occurs at degree $p$ or $p+1$. Any function with $\omega(p)/p\to\infty$ eventually has $\omega(p)>p+1$ for every sufficiently large prime. Hence (iii) fails. The same theorem gives infinitely many denominator primes, so (ii) fails; the Eisenstein theorem for algebraic power series then shows that (i) fails as well.
+\end{proof}
+
+\section{Relation to the Lam--Litt problem and prior work}
+
+Theorem~\ref{thm:Hp} gives a complete local obstruction polynomial for one particular ordinary nonlinear ODE family. Theorem~\ref{thm:A1} is a particularly explicit instance: it identifies the first index at which every prime other than $3$ occurs. Theorem~\ref{thm:rational-parameter} classifies finite denominator support for the zero-initial family, and Theorem~\ref{thm:residue-sieve} gives the exact eventual congruence classes and densities of its first-obstructed primes.
+
+The classical Yablonskii--Vorob'ev theory already constructs the rational Painlev\'e II solutions at integer parameter values; Murata's theorem gives the rational-solution classification \cite{Murata}. Kaneko--Ochiai give explicit formulas for coefficients of the associated polynomials and study their reductions modulo primes \cite{KanekoOchiai}; Roffelsen proves divisibility results and studies relations between roots and Taylor expansions of the rational solutions \cite{Roffelsen}. Our proof uses the classical rational specializations $A=\pm3j$ as roots of $H_p$, but the assertion \eqref{eq:Hp} determines the entire first-obstruction polynomial for the formal family with arbitrary parameter.
+
+The unrestricted Lam--Litt problem allows arbitrary order and arbitrary rational right-hand side, subject only to regularity at the initial jet. None of the results here treats that generality. In particular, this paper does not establish that finite denominator support forces algebraicity for an arbitrary ordinary rational ODE.
+
+\section*{Acknowledgements and AI-use disclosure}
+AI tools were used for exploratory mathematical work, symbolic and exact-arithmetic checks, literature triage, and editorial assistance. The human author is responsible for checking the arguments and for the final mathematical content. The verification script included with this paper is supplementary evidence and is not a substitute for the proofs.
+
+\begin{thebibliography}{9}
+
+\bibitem{LamLitt}
+Y.~H.~J.~Lam and D.~Litt,
+\emph{Algebraicity and integrality of solutions to differential equations},
+arXiv:2501.13175 (2025).
+
+\bibitem{KanekoOchiai}
+M.~Kaneko and H.~Ochiai,
+\emph{On coefficients of Yablonskii--Vorob'ev polynomials},
+J. Math. Soc. Japan \textbf{55} (2003), no.~4, 985--993.
+DOI: \href{https://doi.org/10.2969/jmsj/1191418760}{10.2969/jmsj/1191418760}.
+
+\bibitem{Roffelsen}
+P.~Roffelsen,
+\emph{Irrationality of the roots of the Yablonskii--Vorob'ev polynomials and relations between them},
+SIGMA \textbf{6} (2010), 095, 11 pp.
+DOI: \href{https://doi.org/10.3842/SIGMA.2010.095}{10.3842/SIGMA.2010.095}.
+
+\bibitem{BiluBorichev}
+Y.~Bilu and A.~Borichev,
+\emph{Remarks on Eisenstein},
+arXiv:1112.2290 (2011).
+
+\bibitem{SutherlandDirichlet}
+A.~V.~Sutherland,
+\emph{18.785 Number Theory I, Lecture 18: Dirichlet $L$-functions and primes in arithmetic progressions},
+MIT lecture notes (2021).
+
+\bibitem{Murata}
+Y.~Murata,
+\emph{Rational solutions of the second and fourth Painlev\'e equations},
+Funkcial. Ekvac. \textbf{28} (1985), no.~1, 1--32.
+
+\bibitem{Fukutani}
+H.~Fukutani, K.~Okamoto, and H.~Umemura,
+\emph{Special polynomials and Hirota bilinear relations of the second and fourth Painlev\'e equations},
+Nagoya Math. J. \textbf{159} (2000), 179--200.
+
+\bibitem{FreitagNagloo}
+J.~Freitag and J.~Nagloo,
+\emph{Algebraic relations between solutions of Painlev\'e equations},
+J. London Math. Soc. \textbf{111} (2025), no.~6, e70190.
+DOI: \href{https://doi.org/10.1112/jlms.70190}{10.1112/jlms.70190}.
+
+\bibitem{DLMF}
+NIST Digital Library of Mathematical Functions,
+\emph{Chapter 32: Painlev\'e Transcendents, Section 32.8: Rational Solutions},
+\url{https://dlmf.nist.gov/32.8}.
+
+\end{thebibliography}
+\end{document}

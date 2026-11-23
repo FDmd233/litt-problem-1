@@ -1,0 +1,16 @@
+{
+  "project": "First denominator obstructions for a Painleve II family",
+  "version": "0.2.0-preprint",
+  "date": "2026-11-23",
+  "author": "Zhijie He",
+  "main_paper": "paper/main.tex",
+  "main_pdf": "paper/main.pdf",
+  "scope": "A special-family result for the zero-initial Painleve II equation; not a solution of the unrestricted Lam-Litt problem.",
+  "verification": [
+    "verification/verify_pii_obstruction.py",
+    "verification/verify_prime_sieve.py"
+  ],
+  "ai_disclosure": "AI tools assisted with exploration, exact-arithmetic checks, literature triage, and editing; no AI system is an author.",
+  "repository": "https://github.com/FDmd233/litt-problem-1",
+  "additional_result": "Eventual prime congruence classification and natural density of first-obstructed primes"
+}
